@@ -33,7 +33,7 @@ El sistema se dispara de manera automatizada ante cada nuevo formulario recibido
     *   **Tools Integradas:** `Consulta Planes Internet` y `Consulta Planes TV`.
 *   **Bifurcación de Resiliencia (Manejo de Errores):**
     *   **Camino Feliz (Éxito de la IA):** Envía un **Correo al Cliente** con la propuesta e ingresa al **IF Derivación**.
-        *   *Sub-ruta de Servicio Técnico:* **Actualizar Ticket Ventas** $\rightarrow$ **Consulta Servicio Técnico** $\rightarrow$ **Asignación Técnico** $\rightarrow$ **Mensaje a ST** $\rightarrow$ **Espera 5 Días** $\rightarrow$ **Confirmación ST**.
+        *   *Sub-ruta de Servicio Técnico:* **Actualizar Ticket Ventas** $\rightarrow$ **Consulta Servicio Técnico** $\rightarrow$ **Asignación Técnico** $\rightarrow$ **Mensaje a ST** $\rightarrow$ **Espera 5  Días(u otro período indicado)** $\rightarrow$ **Confirmación ST**.
         *   *Sub-ruta de Asesor Comercial:* **Consulta Asesor** $\rightarrow$ **Asignación Asesor** $\rightarrow$ **Mensaje Asesor C** $\rightarrow$ **Espera 5 Días** $\rightarrow$ **Confirmación Asesor**.
     *   **Camino Infeliz (Fallo de la IA):** El flujo desvía la carga hacia el nodo **Actualizacion Ticket: Error** $\rightarrow$ **Consulta ST Alerta** $\rightarrow$ **Asignacion Tecnico** $\rightarrow$ emitiendo un **Mensaje ST Alerta** para intervención humana inmediata.
 
@@ -53,7 +53,7 @@ El sistema se dispara de manera automatizada ante cada nuevo formulario recibido
 
 ### Ciclos de Espera y Cierre de Tickets (HITL)
 Todas las rutas convergentes finalizan en un esquema de **Human-in-the-loop** diseñado para resguardar la calidad del servicio técnico:
-*   **Nodos de Espera:** El sistema mitiga el "Efecto Metralleta" deteniendo la ejecución mediante nodos de **Espera de 5 Días**.
+*   **Nodos de Espera:** El sistema mitiga el "Efecto Metralleta" deteniendo la ejecución mediante nodos de **Espera de 5 Días(u otro período indicado)**.
 *   **Nodos de Confirmación:** Se dispara un **Correo Confirmación Cliente** o **Confirmación ST** interactivo.
 *   **Cierre de Estados (IF Finalizacion / Incidencia):** Dependiendo del feedback del usuario o del asesor, la lógica actualiza el registro en Airtable hacia los estados conclusivos de **Finalización** (Éxito) o **Incidencia** (Reabierto/Auditoría).
 
