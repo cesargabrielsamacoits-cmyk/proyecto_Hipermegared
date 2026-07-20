@@ -1,0 +1,3495 @@
+{
+  "name": "HiperMegaRed",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Formulario Inicio de Trámite').item.json['Tipo de Consulta'] }}",
+        "options": {
+          "systemMessage": "=Eres el Asistente Virtual de Ventas de la empresa de telecomunicaciones \"HiperMegaRed\". Tu único objetivo es redactar un correo electrónico de bienvenida muy amable y comercial para un nuevo cliente potencial.\n\nDatos del cliente para personalizar el correo:\n- Nombre: {{ $('Formulario Inicio de Trámite').item.json.Nombre }} {{ $('Formulario Inicio de Trámite').item.json.Apellido }}\n\nInstrucciones obligatorias para ejecutar tu tarea:\n1. Actúa de forma autónoma: utiliza inmediatamente tus herramientas conectadas de Airtable llamadas \"consulta_planes_int\" y \"consulta_planes_TV\" para consultar el catálogo completo de servicios disponibles (velocidades, características y precios). No inventes datos de planes; limítate estrictamente a lo que devuelvan las herramientas.\n2. Diseña el cuerpo del correo saludando al cliente por su nombre de manera clara, ordenada y atractiva, listando únicamente las opciones de planes que encontraste en la base de datos.\n3. Al final del correo, incluye de forma obligatoria y explícita las siguientes instrucciones de respuesta para el cliente (Llamado a la acción):\n   - \"Para avanzar con la contratación, por favor responde a este correo indicando qué plan o planes de tu preferencia deseas adquirir.\"\n   - \"Si prefieres una atención personalizada, armar un combo a medida o hablar con un humano, responde a este correo escribiendo únicamente la palabra 'ASESOR'.\"\n\nRestricciones estrictas:\n- Escribe únicamente el cuerpo del correo (con saludos, bloques de planes bien presentados y la firma final). \n- No generes código, etiquetas JSON ni textos explicativos por fuera del mensaje.\n- Mantén un tono entusiasta pero corporativo.\n- Si no encuentras datos en las herramientas, infórmalo amablemente, pero nunca inventes velocidades ni precios."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        800,
+        160
+      ],
+      "id": "d870f65c-ae00-4d8a-b7a5-7d6dd444e301",
+      "name": "AI Agent",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblroEradXJKDYuOE",
+          "mode": "list",
+          "cachedResultName": "Planes_TV",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tblroEradXJKDYuOE"
+        },
+        "options": {},
+        "sort": {
+          "property": []
+        }
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.2,
+      "position": [
+        784,
+        560
+      ],
+      "id": "7a2e90a2-89cf-4e45-b395-6fb1085c8e1a",
+      "name": "consulta_planes_tv",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblIM7DzAoTysYiAn",
+          "mode": "list",
+          "cachedResultName": "Planes_Internet",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tblIM7DzAoTysYiAn"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.2,
+      "position": [
+        944,
+        560
+      ],
+      "id": "b1e6da13-05ed-487c-a27c-4ab829d4ce89",
+      "name": "consulta_planes_int",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "openrouter/free",
+          "mode": "list",
+          "cachedResultName": "openrouter/free"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        672,
+        368
+      ],
+      "id": "a8f922c2-6ccd-4963-ae02-6448d0484127",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "1ULe6OEGfWxAwwjj",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblkzu707PXmu0qlZ",
+          "mode": "list",
+          "cachedResultName": "Tickets_Ventas",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tblkzu707PXmu0qlZ"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Cliente_ID": "={{ [ $('Creacion de cliente').item.json.id ] }}",
+            "Estado": "Pendiente"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ID_Ticket_V",
+              "displayName": "ID_Ticket_V",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Cliente_ID",
+              "displayName": "Cliente_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ID_Empleado_V",
+              "displayName": "ID_Empleado_V",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Propuesta_IA",
+              "displayName": "Propuesta_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "ProcesadoIA",
+                  "value": "ProcesadoIA"
+                },
+                {
+                  "name": "Derivado a Ventas",
+                  "value": "Derivado a Ventas"
+                },
+                {
+                  "name": "Finalizado",
+                  "value": "Finalizado"
+                },
+                {
+                  "name": "En revisión",
+                  "value": "En revisión"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Creacion",
+              "displayName": "Fecha_Creacion",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Resumen_Propuesta",
+              "displayName": "Resumen_Propuesta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Notas_Vendedor",
+              "displayName": "Notas_Vendedor",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Link_Contrato",
+              "displayName": "Link_Contrato",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Adjuntos",
+              "displayName": "Adjuntos",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        592,
+        160
+      ],
+      "id": "51240d66-4691-42ab-8a1c-f81b8cb704ee",
+      "name": "Ticket Venta",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbllUePNRY1IMBSKN",
+          "mode": "list",
+          "cachedResultName": "Clientes",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tbllUePNRY1IMBSKN"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nombre": "={{ $('Formulario Inicio de Trámite').item.json.Nombre }}",
+            "Apellido": "={{ $('Formulario Inicio de Trámite').item.json.Apellido }}",
+            "Correo": "={{ $json.Correo }}",
+            "Teléfono": "={{ $('Formulario Inicio de Trámite').item.json['Teléfono'] }}",
+            "Dirección": "={{ $('Formulario Inicio de Trámite').item.json['Dirección'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Cliente_ID",
+              "displayName": "Cliente_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Apellido",
+              "displayName": "Apellido",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Teléfono",
+              "displayName": "Teléfono",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Correo",
+              "displayName": "Correo",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Dirección",
+              "displayName": "Dirección",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Plan_Internet",
+              "displayName": "Plan_Internet",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Plan_TV",
+              "displayName": "Plan_TV",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notas_Cliente",
+              "displayName": "Notas_Cliente",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Registro",
+              "displayName": "Fecha_Registro",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Tickets_Ventas",
+              "displayName": "Tickets_Ventas",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tickets_Soporte",
+              "displayName": "Tickets_Soporte",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        400,
+        160
+      ],
+      "id": "99949c26-b011-4954-89c3-9d492e18e82e",
+      "name": "Creacion de cliente",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2464,
+        368
+      ],
+      "id": "50c6b313-97d5-4ca3-999e-356e7415d17b",
+      "name": "Wait",
+      "webhookId": "bdfd76da-da6a-4fed-b32e-e1d25441181f"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblkzu707PXmu0qlZ",
+          "mode": "list",
+          "cachedResultName": "Tickets_Ventas",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tblkzu707PXmu0qlZ"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Ticket Venta').item.json.id }}",
+            "Estado": "Aprobado",
+            "Resumen_Propuesta": "={{ $json.data.text }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "ID_Ticket_V",
+              "displayName": "ID_Ticket_V",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Cliente_ID",
+              "displayName": "Cliente_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ID_Empleado_V",
+              "displayName": "ID_Empleado_V",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Propuesta_IA",
+              "displayName": "Propuesta_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "ProcesadoIA",
+                  "value": "ProcesadoIA"
+                },
+                {
+                  "name": "Derivado a Ventas",
+                  "value": "Derivado a Ventas"
+                },
+                {
+                  "name": "Finalizado",
+                  "value": "Finalizado"
+                },
+                {
+                  "name": "En revisión",
+                  "value": "En revisión"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Creacion",
+              "displayName": "Fecha_Creacion",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Resumen_Propuesta",
+              "displayName": "Resumen_Propuesta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notas_Vendedor",
+              "displayName": "Notas_Vendedor",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Link_Contrato",
+              "displayName": "Link_Contrato",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Adjuntos",
+              "displayName": "Adjuntos",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1712,
+        368
+      ],
+      "id": "7e048d3a-c362-4884-9923-1d5bcfd85ad9",
+      "name": "Actualizar ticket ventas",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl9OrO3dnrwAB1lm",
+          "mode": "list",
+          "cachedResultName": "Soporte",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tbl9OrO3dnrwAB1lm"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1920,
+        368
+      ],
+      "id": "5e7c68ce-b191-4e11-b6d1-9a3a6a2b79ca",
+      "name": "Consulta Servicio tecnico",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Buscamos los datos apuntando directamente al nombre de tu nodo de Airtable de técnicos\nlet tecnicos = [];\ntry {\n    tecnicos = $(\"consulta_soporte\").all();\n} catch (e) {\n    tecnicos = $input.all();\n}\n\n// Si la lista está vacía, activamos el plan de respaldo para que el flujo no se detenga\nif (tecnicos.length === 0) {\n    return [{\n        tecnico_asignado: \"Soporte General Técnico (Respaldo)\",\n        correo_tecnico: \"soporte@hipermegared.com\",\n        estado_derivacion: \"Respaldo\"\n    }];\n}\n\n// 2. Lógica matemática equitativa y escalable navegando el objeto 'fields'\nlet sumaCaracteres = 0;\ntecnicos.forEach(item => {\n    const campos = item.json.fields || {};\n    const nombre = campos.Nombre || \"\";\n    sumaCaracteres += nombre.length;\n});\n\nconst indiceElegido = sumaCaracteres % tecnicos.length;\n\n// 3. Extraemos el técnico final usando la ruta exacta de tu Airtable\nconst tecnicoSeleccionado = tecnicos[indiceElegido].json.fields || {};\n\nreturn [{\n    tecnico_asignado: tecnicoSeleccionado.Nombre || \"Técnico de Guardia\",\n    correo_tecnico: tecnicoSeleccionado.Correo || \"soporte@hipermegared.com\",\n    estado_derivacion: \"Éxito Técnico\"\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2112,
+        368
+      ],
+      "id": "5d506665-52f6-4cea-9ec2-72566a17282c",
+      "name": "Asignacion Tecnico"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "={{ $('Formulario Inicio de Trámite').item.json.Correo }}",
+        "subject": "¡Bienvenido a HiperMegaRed! Conoce nuestros planes de Internet y TV",
+        "message": "={{ $json.output }}",
+        "responseType": "freeText",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1184,
+        160
+      ],
+      "id": "57549723-952e-4829-8aa8-6fa714ef0571",
+      "name": "Correo Al Cliente",
+      "webhookId": "08c3f2bb-3ddf-4f10-bf3b-b27ebe446334",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "yjEEZtqUJOTSBPzX",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.correo_tecnico }}",
+        "subject": "[INSTALACIÓN] Nueva solicitud de alta a domicilio - HiperMegaRed",
+        "message": "=Hola {{ $json.tecnico_asignado }} del equipo de Soporte Técnico,  Un cliente ha aceptado la propuesta comercial y solicita la instalación del servicio en su domicilio.\n\n**Datos del Cliente para la visita:** {{ $('Formulario Inicio de Trámite').item.json.Nombre }} {{ $('Formulario Inicio de Trámite').item.json.Apellido }}\n**Contacto:** {{ $('Formulario Inicio de Trámite').item.json['Teléfono'] }} / {{ $('Formulario Inicio de Trámite').item.json['Correo Electronico'] }} / {{ $('Formulario Inicio de Trámite').item.json['Dirección'] }}\n\n**Detalles del plan aceptado (Respuesta del usuario):** > {{ $('Derivacion').item.json.data.text }}  Por favor, pónganse en contacto con el usuario a la brevedad para coordinar el día y horario de la instalación.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2304,
+        368
+      ],
+      "id": "1233406e-8fc5-4b30-98c5-0eedb11c63ee",
+      "name": "Mensaje a ST1",
+      "webhookId": "55c70be8-ae0e-49a3-a37b-72ab9c6c9e45",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "yjEEZtqUJOTSBPzX",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b09a04a6-bb3b-4262-95f0-fd3a8daa1f1e",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2832,
+        368
+      ],
+      "id": "1143fcfb-6e32-45cf-babf-5c7e8cd3cce6",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblkzu707PXmu0qlZ",
+          "mode": "list",
+          "cachedResultName": "Tickets_Ventas",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tblkzu707PXmu0qlZ"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Ticket Venta').item.json.id }}",
+            "Estado": "Finalizado"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "ID_Ticket_V",
+              "displayName": "ID_Ticket_V",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Cliente_ID",
+              "displayName": "Cliente_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ID_Empleado_V",
+              "displayName": "ID_Empleado_V",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Propuesta_IA",
+              "displayName": "Propuesta_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "ProcesadoIA",
+                  "value": "ProcesadoIA"
+                },
+                {
+                  "name": "Derivado a Ventas",
+                  "value": "Derivado a Ventas"
+                },
+                {
+                  "name": "Finalizado",
+                  "value": "Finalizado"
+                },
+                {
+                  "name": "En revisión",
+                  "value": "En revisión"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Creacion",
+              "displayName": "Fecha_Creacion",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Resumen_Propuesta",
+              "displayName": "Resumen_Propuesta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notas_Vendedor",
+              "displayName": "Notas_Vendedor",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Link_Contrato",
+              "displayName": "Link_Contrato",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Adjuntos",
+              "displayName": "Adjuntos",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        3040,
+        208
+      ],
+      "id": "437319ea-ce88-4671-a6e1-cef91ac768ec",
+      "name": "Finalizacion",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "={{ $('Asignacion Tecnico').item.json.correo_tecnico }}",
+        "subject": "=[SEGUIMIENTO] ¿Se finalizó la instalación del cliente {{ $('Formulario Inicio de Trámite').item.json.Nombre }} {{ $('Formulario Inicio de Trámite').item.json.Apellido }}?",
+        "message": "=Hola **{{ $('Asignacion Tecnico').item.json.tecnico_asignado }}**,\n\nHan pasado 5 días desde que se te asignó la solicitud de instalación a domicilio para el siguiente cliente:\n\n* **Cliente:** {{ $('Formulario Inicio de Trámite').item.json.Nombre }} {{ $('Formulario Inicio de Trámite').item.json.Apellido }}\n* **Contacto:** {{ $('Formulario Inicio de Trámite').item.json['Correo Electronico'] }}\n\nPor favor, responde a este correo para confirmar si el trámite ya fue **finalizado** con éxito o si se presentó algún inconveniente o reprogramación en el domicilio del usuario.\n\nAtentamente,  \n_Control de Calidad - HiperMegaRed_",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2624,
+        368
+      ],
+      "id": "3d17b05f-0345-43d1-8bf7-1bb483c51f45",
+      "name": "Confirmacion ST",
+      "webhookId": "9e19b446-e496-4144-9443-eff010fd8592",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "yjEEZtqUJOTSBPzX",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bcd1353b-412f-4553-9fdf-aea163137535",
+              "leftValue": "={{ $json['Tipo de Consulta'] }}",
+              "rightValue": "soporte tecnico",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        192,
+        -144
+      ],
+      "id": "62fdbd02-0409-4e12-8b3e-4e4785e982b8",
+      "name": "Comercial/Soporte"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5ddd708a-6db0-46fe-a149-5e880cc0658c",
+              "leftValue": "={{ $json.data.text }}",
+              "rightValue": "ASESOR",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1392,
+        160
+      ],
+      "id": "21ed0c0c-e33d-46dd-8231-e432a64bcd27",
+      "name": "Derivacion"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblkzu707PXmu0qlZ",
+          "mode": "list",
+          "cachedResultName": "Tickets_Ventas",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tblkzu707PXmu0qlZ"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Ticket Venta').item.json.id }}",
+            "Estado": "Incidencia"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "ID_Ticket_V",
+              "displayName": "ID_Ticket_V",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Cliente_ID",
+              "displayName": "Cliente_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ID_Empleado_V",
+              "displayName": "ID_Empleado_V",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Propuesta_IA",
+              "displayName": "Propuesta_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "ProcesadoIA",
+                  "value": "ProcesadoIA"
+                },
+                {
+                  "name": "Derivado a Ventas",
+                  "value": "Derivado a Ventas"
+                },
+                {
+                  "name": "Finalizado",
+                  "value": "Finalizado"
+                },
+                {
+                  "name": "En revisión",
+                  "value": "En revisión"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                },
+                {
+                  "name": "Incidencia",
+                  "value": "Incidencia"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Creacion",
+              "displayName": "Fecha_Creacion",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Resumen_Propuesta",
+              "displayName": "Resumen_Propuesta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notas_Vendedor",
+              "displayName": "Notas_Vendedor",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Link_Contrato",
+              "displayName": "Link_Contrato",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Adjuntos",
+              "displayName": "Adjuntos",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        3040,
+        464
+      ],
+      "id": "83ffc0b3-31e6-4da8-8d1a-52feaa596ccb",
+      "name": "Incidencia",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblA7RswZcJ6lHm4X",
+          "mode": "list",
+          "cachedResultName": "Comercial",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tblA7RswZcJ6lHm4X"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1712,
+        -112
+      ],
+      "id": "ee2625d3-5f9b-4c32-a8fe-61ea8708f40f",
+      "name": "Consulta Asesor",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Apuntamos de forma directa al nodo de Airtable que busca al comercial\nlet asesores = [];\ntry {\n    asesores = $(\"Consulta Asesor\").all();\n} catch (e) {\n    asesores = $input.all();\n}\n\n// Si la lista está completamente vacía, activamos el respaldo de emergencia\nif (asesores.length === 0) {\n    return [{\n        asesor_assigned: \"Asesor Comercial (Respaldo)\",\n        correo_asesor: \"ventas@hipermegared.com\",\n        estado_derivacion: \"Respaldo\"\n    }];\n}\n\n// 2. Lógica matemática equitativa y escalable navegando el objeto 'fields'\nlet sumaCaracteres = 0;\nasesores.forEach(item => {\n    // Tu captura nos muestra que los datos vienen dentro de item.json.fields\n    const campos = item.json.fields || {};\n    const nombre = campos.Nombre || \"\";\n    sumaCaracteres += nombre.length;\n});\n\nconst indiceElegido = sumaCaracteres % asesores.length;\n\n// 3. Extraemos el asesor final usando la ruta exacta de tu Airtable\nconst registroSeleccionado = asesores[indiceElegido].json.fields || {};\n\nreturn [{\n    asesor_asignado: registroSeleccionado.Nombre || \"Asesor Comercial\",\n    correo_asesor: registroSeleccionado.Correo || \"ventas@hipermegared.com\",\n    estado_derivacion: \"Éxito\"\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1872,
+        -112
+      ],
+      "id": "919463fc-6dc2-49c9-9c40-a045f5fd0544",
+      "name": "Asignacion asesor"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.correo_asesor }}",
+        "subject": "[URGENTE] Nuevo cliente asignado para atención personalizada - HiperMegaRed",
+        "message": "=Hola {{ $json.asesor_asignado }},  El sistema de asignación equitativa te ha asignado un nuevo cliente potencial que ha solicitado asistencia humana a través del correo de bienvenida.  \nDatos del Cliente: {{ $('Formulario Inicio de Trámite').item.json.Nombre }} {{ $('Formulario Inicio de Trámite').item.json.Apellido }}\nCorreo de contacto: {{ $('Formulario Inicio de Trámite').item.json.Correo }}  \nPor favor, ponte en contacto con el cliente a la brevedad para armar su combo a medida o resolver sus dudas.  Atentamente,   _Sistema de Automatización de Ventas HiperMegaRed_",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2032,
+        -112
+      ],
+      "id": "6794c503-d56a-4067-8cf3-760827cbd85d",
+      "name": "Mensaje AsesorC",
+      "webhookId": "b80be554-df55-4f5f-be98-fba21c7d1aa3",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "yjEEZtqUJOTSBPzX",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "59588581-9e7a-4019-943b-7009b5620866",
+              "leftValue": "={{ $('Busqueda Cliente').item.json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        608,
+        -464
+      ],
+      "id": "8b0710ae-f0ca-4ff9-9984-be7d11167ca1",
+      "name": "Existe Cliente?"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbllUePNRY1IMBSKN",
+          "mode": "list",
+          "cachedResultName": "Clientes",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tbllUePNRY1IMBSKN"
+        },
+        "filterByFormula": "={Correo} = \"{{ $('Formulario Inicio de Trámite').item.json.Correo }}\"",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        400,
+        -464
+      ],
+      "id": "45fe889e-6837-4bd6-8c95-5fea6f042531",
+      "name": "Busqueda Cliente",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Formulario Inicio de Trámite').item.json.Correo }}",
+        "subject": "⚠️ No pudimos procesar tu solicitud de Soporte Técnico - HiperMegaRed",
+        "message": "=Hola **{{ $('Formulario Inicio de Trámite').item.json.Nombre }}**,  Recibimos una solicitud de soporte técnico de tu parte. Sin embargo, nuestro sistema automatizado no logró encontrar ninguna cuenta activa asociada al correo electrónico: **{{ $('Formulario Inicio de Trámite').item.json.Correo }}**.  ### ¿Qué pudo haber pasado? 1. **Error de tipeo:** Es posible que hayas ingresado un correo diferente al que usaste cuando contrataste el servicio. 2. **Aún no eres cliente:** Si querés solicitar el alta del servicio por primera vez, recordá seleccionar la opción **\"Comercial/Venta\"** en nuestro formulario.  ### ¿Cómo proceder? Por favor, vuelve a iniciar la solicitud ingresando los datos correctos o ponte en contacto con nuestro equipo administrativo para verificar el estado de tu cuenta.  Atentamente,   _Centro de Atención al Cliente - HiperMegaRed_",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        816,
+        -288
+      ],
+      "id": "e677c127-3a9a-4e4f-b562-458a35c227d0",
+      "name": "Cliente no encontrado",
+      "webhookId": "a146ae80-54a9-4a0d-bcd6-4ccbf587f500",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "yjEEZtqUJOTSBPzX",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl9WGW3XtDoCvg6w",
+          "mode": "list",
+          "cachedResultName": "Tickets_Soporte",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tbl9WGW3XtDoCvg6w"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Cliente_ID": "={{ [ $('Busqueda Cliente').item.json.id ] }}",
+            "Estado": "En Proceso"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ID_Ticket_S",
+              "displayName": "ID_Ticket_S",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Cliente_ID",
+              "displayName": "Cliente_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ID_Empleado_S",
+              "displayName": "ID_Empleado_S",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Motivo_Falla",
+              "displayName": "Motivo_Falla",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Visita",
+              "displayName": "Fecha_Visita",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Score_Feedback",
+              "displayName": "Score_Feedback",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "En Proceso",
+                  "value": "En Proceso"
+                },
+                {
+                  "name": "Finalizado",
+                  "value": "Finalizado"
+                },
+                {
+                  "name": "Abierto",
+                  "value": "Abierto"
+                },
+                {
+                  "name": "En proceso",
+                  "value": "En proceso"
+                },
+                {
+                  "name": "Cerrado",
+                  "value": "Cerrado"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Diagnóstico_Sugerido",
+              "displayName": "Diagnóstico_Sugerido",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notas_Técnico",
+              "displayName": "Notas_Técnico",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Adjuntos_Incidencia",
+              "displayName": "Adjuntos_Incidencia",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        816,
+        -560
+      ],
+      "id": "a6a34dc5-54fd-4141-ac98-692860890972",
+      "name": "Creacion ticket soporte",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl9OrO3dnrwAB1lm",
+          "mode": "list",
+          "cachedResultName": "Soporte",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tbl9OrO3dnrwAB1lm"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1024,
+        -560
+      ],
+      "id": "0a892883-8e85-4d57-8fae-f49512fafe28",
+      "name": "Consulta ST",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Buscamos los datos apuntando directamente al nombre de tu nodo de Airtable de técnicos\nlet tecnicos = [];\ntry {\n    tecnicos = $(\"consulta_soporte\").all();\n} catch (e) {\n    tecnicos = $input.all();\n}\n\n// Si la lista está vacía, activamos el plan de respaldo para que el flujo no se detenga\nif (tecnicos.length === 0) {\n    return [{\n        tecnico_asignado: \"Soporte General Técnico (Respaldo)\",\n        correo_tecnico: \"soporte@hipermegared.com\",\n        estado_derivacion: \"Respaldo\"\n    }];\n}\n\n// 2. Lógica matemática equitativa y escalable navegando el objeto 'fields'\nlet sumaCaracteres = 0;\ntecnicos.forEach(item => {\n    const campos = item.json.fields || {};\n    const nombre = campos.Nombre || \"\";\n    sumaCaracteres += nombre.length;\n});\n\nconst indiceElegido = sumaCaracteres % tecnicos.length;\n\n// 3. Extraemos el técnico final usando la ruta exacta de tu Airtable\nconst tecnicoSeleccionado = tecnicos[indiceElegido].json.fields || {};\n\nreturn [{\n    tecnico_asignado: tecnicoSeleccionado.Nombre || \"Técnico de Guardia\",\n    correo_tecnico: tecnicoSeleccionado.Correo || \"soporte@hipermegared.com\",\n    estado_derivacion: \"Éxito Técnico\"\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1232,
+        -560
+      ],
+      "id": "8c8a0cb0-af90-4fcf-b9cf-bf13de08c20e",
+      "name": "Asignación Tecnico"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.correo_tecnico }}",
+        "subject": "=⚠️ [URGENTE] Nueva Orden de Soporte Técnico - Cliente: {{ $('Busqueda Cliente').item.json.fields.Nombre }} {{ $('Busqueda Cliente').item.json.fields.Apellido }}",
+        "message": "=Hola **{{ $json.tecnico_asignado }}**,  Se te ha asignado una nueva solicitud de asistencia técnica urgente en el domicilio para un cliente activo de **HiperMegaRed**.   A continuación, dispones de los datos necesarios para coordinar la visita y revisar la instalación:  ### 👤 Datos del Cliente * **Nombre y Apellido:** {{ $('Busqueda Cliente').item.json.fields.Nombre }} {{ $('Busqueda Cliente').item.json.fields.Apellido }}* **Teléfono de Contacto:** {{ $('Busqueda Cliente').item.json.fields['Teléfono'] }} * **Dirección:** {{ $('Busqueda Cliente').item.json.fields['Dirección'] }} * **Correo Electrónico:** {{ $('Busqueda Cliente').item.json.fields.Correo }}  * **Fecha de Reporte:** 2026-07-06  Por favor, ponte en contacto con el usuario a la brevedad para coordinar el horario de la visita técnica a domicilio y reportar cualquier novedad sobre el estado del ticket.  Atentamente,   _Sistema de Gestión de Incidencias - HiperMegaRed_",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1440,
+        -560
+      ],
+      "id": "c94fc7f3-b937-4dca-b00d-270cda7977e0",
+      "name": "Mensaje ST S",
+      "webhookId": "7faf8e5b-9918-41f9-9645-5eaf8e4e8bf8",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "yjEEZtqUJOTSBPzX",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5c45b4b4-921d-46c6-af50-ff83258aee80",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2064,
+        -560
+      ],
+      "id": "28448159-07b8-442c-9749-1e0f23b67a34",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1648,
+        -560
+      ],
+      "id": "480e5720-1875-475d-8ee9-9e32660cffeb",
+      "name": "Wait 2",
+      "webhookId": "a85bdc08-3218-4937-9e06-4f05313607be"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "={{ $('Busqueda Cliente').item.json.fields.Correo }}",
+        "subject": "¿Se solucionó tu inconveniente técnico? - HiperMegaRed",
+        "message": "=Hola **{{ $('Busqueda Cliente').item.json.fields.Nombre }} {{ $('Busqueda Cliente').item.json.fields.Apellido }}**,\n\nHace unos días asignamos a nuestro equipo de servicio técnico para revisar el inconveniente que reportaste con tu servicio de **HiperMegaRed**.\n\nQueremos asegurarnos de que todo esté funcionando a la perfección. Por favor, confírmanos respondiendo a este correo electrónico.\n\nTu opinión es fundamental para nosotros para evaluar el desempeño de nuestro personal y garantizar la calidad de tu conexión.\n\nAtentamente,  \n_Control de Calidad - HiperMegaRed_",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double",
+            "approveLabel": "Resuelto",
+            "disapproveLabel": "No Resuelto"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1856,
+        -560
+      ],
+      "id": "2c17486a-d4cd-4b6a-8f95-a682376008af",
+      "name": "Correo Confirmacion Cliente",
+      "webhookId": "0f306695-f428-4455-b239-61ab742eb09b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "yjEEZtqUJOTSBPzX",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl9WGW3XtDoCvg6w",
+          "mode": "list",
+          "cachedResultName": "Tickets_Soporte",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tbl9WGW3XtDoCvg6w"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Estado": "Finalizado",
+            "id": "={{ $('Creacion ticket soporte').item.json.id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "ID_Ticket_S",
+              "displayName": "ID_Ticket_S",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Cliente_ID",
+              "displayName": "Cliente_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ID_Empleado_S",
+              "displayName": "ID_Empleado_S",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Motivo_Falla",
+              "displayName": "Motivo_Falla",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Visita",
+              "displayName": "Fecha_Visita",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Score_Feedback",
+              "displayName": "Score_Feedback",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "En Proceso",
+                  "value": "En Proceso"
+                },
+                {
+                  "name": "Finalizado",
+                  "value": "Finalizado"
+                },
+                {
+                  "name": "Abierto",
+                  "value": "Abierto"
+                },
+                {
+                  "name": "En proceso",
+                  "value": "En proceso"
+                },
+                {
+                  "name": "Cerrado",
+                  "value": "Cerrado"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Diagnóstico_Sugerido",
+              "displayName": "Diagnóstico_Sugerido",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notas_Técnico",
+              "displayName": "Notas_Técnico",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Adjuntos_Incidencia",
+              "displayName": "Adjuntos_Incidencia",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        2304,
+        -704
+      ],
+      "id": "4b56d4da-6ed8-4dbd-8e23-f42e8fbb486a",
+      "name": "Finalización",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl9WGW3XtDoCvg6w",
+          "mode": "list",
+          "cachedResultName": "Tickets_Soporte",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tbl9WGW3XtDoCvg6w"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Estado": "Incidencia",
+            "id": "={{ $('Creacion ticket soporte').item.json.id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "ID_Ticket_S",
+              "displayName": "ID_Ticket_S",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Cliente_ID",
+              "displayName": "Cliente_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ID_Empleado_S",
+              "displayName": "ID_Empleado_S",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Motivo_Falla",
+              "displayName": "Motivo_Falla",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Visita",
+              "displayName": "Fecha_Visita",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Score_Feedback",
+              "displayName": "Score_Feedback",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "En Proceso",
+                  "value": "En Proceso"
+                },
+                {
+                  "name": "Finalizado",
+                  "value": "Finalizado"
+                },
+                {
+                  "name": "Abierto",
+                  "value": "Abierto"
+                },
+                {
+                  "name": "En proceso",
+                  "value": "En proceso"
+                },
+                {
+                  "name": "Cerrado",
+                  "value": "Cerrado"
+                },
+                {
+                  "name": "Incidencia",
+                  "value": "Incidencia"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Diagnóstico_Sugerido",
+              "displayName": "Diagnóstico_Sugerido",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notas_Técnico",
+              "displayName": "Notas_Técnico",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Adjuntos_Incidencia",
+              "displayName": "Adjuntos_Incidencia",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        2304,
+        -464
+      ],
+      "id": "37bae296-e930-4f1f-9b40-3d842ba19e70",
+      "name": "Incidencia S",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2192,
+        -112
+      ],
+      "id": "b3dd6118-716f-4971-9c70-62844453faa4",
+      "name": "Wait1",
+      "webhookId": "1073ca63-967d-4625-8565-35f1ccf3d657"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b09a04a6-bb3b-4262-95f0-fd3a8daa1f1e",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2528,
+        -112
+      ],
+      "id": "cced0bfb-2adf-41a9-99ab-47ab8ea39fd2",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblkzu707PXmu0qlZ",
+          "mode": "list",
+          "cachedResultName": "Tickets_Ventas",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tblkzu707PXmu0qlZ"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Ticket Venta').item.json.id }}",
+            "Estado": "Finalizado"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "ID_Ticket_V",
+              "displayName": "ID_Ticket_V",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Cliente_ID",
+              "displayName": "Cliente_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ID_Empleado_V",
+              "displayName": "ID_Empleado_V",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Propuesta_IA",
+              "displayName": "Propuesta_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "ProcesadoIA",
+                  "value": "ProcesadoIA"
+                },
+                {
+                  "name": "Derivado a Ventas",
+                  "value": "Derivado a Ventas"
+                },
+                {
+                  "name": "Finalizado",
+                  "value": "Finalizado"
+                },
+                {
+                  "name": "En revisión",
+                  "value": "En revisión"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Creacion",
+              "displayName": "Fecha_Creacion",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Resumen_Propuesta",
+              "displayName": "Resumen_Propuesta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notas_Vendedor",
+              "displayName": "Notas_Vendedor",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Link_Contrato",
+              "displayName": "Link_Contrato",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Adjuntos",
+              "displayName": "Adjuntos",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        2736,
+        -224
+      ],
+      "id": "96bd791d-baea-49e6-824d-a01fe576a9ff",
+      "name": "Finalizacion1",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblkzu707PXmu0qlZ",
+          "mode": "list",
+          "cachedResultName": "Tickets_Ventas",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tblkzu707PXmu0qlZ"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Ticket Venta').item.json.id }}",
+            "Estado": "Incidencia"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "ID_Ticket_V",
+              "displayName": "ID_Ticket_V",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Cliente_ID",
+              "displayName": "Cliente_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ID_Empleado_V",
+              "displayName": "ID_Empleado_V",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Propuesta_IA",
+              "displayName": "Propuesta_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "ProcesadoIA",
+                  "value": "ProcesadoIA"
+                },
+                {
+                  "name": "Derivado a Ventas",
+                  "value": "Derivado a Ventas"
+                },
+                {
+                  "name": "Finalizado",
+                  "value": "Finalizado"
+                },
+                {
+                  "name": "En revisión",
+                  "value": "En revisión"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                },
+                {
+                  "name": "Incidencia",
+                  "value": "Incidencia"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Creacion",
+              "displayName": "Fecha_Creacion",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Resumen_Propuesta",
+              "displayName": "Resumen_Propuesta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notas_Vendedor",
+              "displayName": "Notas_Vendedor",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Link_Contrato",
+              "displayName": "Link_Contrato",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Adjuntos",
+              "displayName": "Adjuntos",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        2736,
+        -16
+      ],
+      "id": "e1844975-abb8-44ca-8f23-3ae0a07f3a72",
+      "name": "Incidencia1",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "={{ $('Asignacion asesor').item.json.correo_asesor }}",
+        "subject": "=[SEGUIMIENTO] ¿Se finalizó la instalación del cliente {{ $('Formulario Inicio de Trámite').item.json.Nombre }} {{ $('Formulario Inicio de Trámite').item.json.Apellido }}?",
+        "message": "=Hola **{{ $('Asignacion asesor').item.json.asesor_asignado }}**,\n\nHan pasado 5 días desde que se te asignó la solicitud de instalación a domicilio para el siguiente cliente:\n\n* **Cliente:** {{ $('Formulario Inicio de Trámite').item.json.Nombre }} {{ $('Formulario Inicio de Trámite').item.json.Apellido }}\n* **Contacto:** {{ $('Formulario Inicio de Trámite').item.json.Correo }}\n\nPor favor, responde a este correo para confirmar si el trámite ya fue **finalizado** con éxito o si se presentó algún inconveniente o reprogramación en el domicilio del usuario.\n\nAtentamente,  \n_Control de Calidad - HiperMegaRed_",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2352,
+        -112
+      ],
+      "id": "36f35ab0-de0b-4a18-8cbe-81736af8f851",
+      "name": "Confirmacion Asesor",
+      "webhookId": "9e19b446-e496-4144-9443-eff010fd8592",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "yjEEZtqUJOTSBPzX",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblkzu707PXmu0qlZ",
+          "mode": "list",
+          "cachedResultName": "Tickets_Ventas",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tblkzu707PXmu0qlZ"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Ticket Venta').item.json.id }}",
+            "Estado": "Incidencia"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "ID_Ticket_V",
+              "displayName": "ID_Ticket_V",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Cliente_ID",
+              "displayName": "Cliente_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ID_Empleado_V",
+              "displayName": "ID_Empleado_V",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Propuesta_IA",
+              "displayName": "Propuesta_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "ProcesadoIA",
+                  "value": "ProcesadoIA"
+                },
+                {
+                  "name": "Derivado a Ventas",
+                  "value": "Derivado a Ventas"
+                },
+                {
+                  "name": "Finalizado",
+                  "value": "Finalizado"
+                },
+                {
+                  "name": "En revisión",
+                  "value": "En revisión"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                },
+                {
+                  "name": "Incidencia",
+                  "value": "Incidencia"
+                },
+                {
+                  "name": "Error Agente IA",
+                  "value": "Error Agente IA"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Creacion",
+              "displayName": "Fecha_Creacion",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Resumen_Propuesta",
+              "displayName": "Resumen_Propuesta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notas_Vendedor",
+              "displayName": "Notas_Vendedor",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Link_Contrato",
+              "displayName": "Link_Contrato",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Adjuntos",
+              "displayName": "Adjuntos",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1200,
+        624
+      ],
+      "id": "2d6bfc5b-299f-4a6d-9a9a-2760ba8944ec",
+      "name": "Actualizacion Ticket Error",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appkFBDLqSpUrBHY0",
+          "mode": "list",
+          "cachedResultName": "HiperMegaRed",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl9OrO3dnrwAB1lm",
+          "mode": "list",
+          "cachedResultName": "Soporte",
+          "cachedResultUrl": "https://airtable.com/appkFBDLqSpUrBHY0/tbl9OrO3dnrwAB1lm"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1408,
+        624
+      ],
+      "id": "43b02f12-f63a-4881-a6b4-ea6aaf3ba6c0",
+      "name": "Consulta ST Alerta",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "XH5GXtwagPtDMCir",
+          "name": "Airtable OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Buscamos los datos apuntando directamente al nombre de tu nodo de Airtable de técnicos\nlet tecnicos = [];\ntry {\n    tecnicos = $(\"consulta_soporte\").all();\n} catch (e) {\n    tecnicos = $input.all();\n}\n\n// Si la lista está vacía, activamos el plan de respaldo para que el flujo no se detenga\nif (tecnicos.length === 0) {\n    return [{\n        tecnico_asignado: \"Soporte General Técnico (Respaldo)\",\n        correo_tecnico: \"soporte@hipermegared.com\",\n        estado_derivacion: \"Respaldo\"\n    }];\n}\n\n// 2. Lógica matemática equitativa y escalable navegando el objeto 'fields'\nlet sumaCaracteres = 0;\ntecnicos.forEach(item => {\n    const campos = item.json.fields || {};\n    const nombre = campos.Nombre || \"\";\n    sumaCaracteres += nombre.length;\n});\n\nconst indiceElegido = sumaCaracteres % tecnicos.length;\n\n// 3. Extraemos el técnico final usando la ruta exacta de tu Airtable\nconst tecnicoSeleccionado = tecnicos[indiceElegido].json.fields || {};\n\nreturn [{\n    tecnico_asignado: tecnicoSeleccionado.Nombre || \"Técnico de Guardia\",\n    correo_tecnico: tecnicoSeleccionado.Correo || \"soporte@hipermegared.com\",\n    estado_derivacion: \"Éxito Técnico\"\n}];;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1616,
+        624
+      ],
+      "id": "7bf2ea97-fbbb-47ef-9a61-99dfb487fe18",
+      "name": "Asignacion Tecnico1"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.correo_tecnico }}",
+        "subject": "=🚨 [ALERTA DE SISTEMA] Fallo Crítico en Agente IA - Procesamiento de Lead",
+        "message": "=⚠️ **ATENCIÓN: FALLO EN EL FLUJO AUTOMATIZADO**  El sistema de orquestación de **HiperMegaRed** ha detectado un error crítico e inesperado al intentar procesar un lead comercial mediante el nodo de Inteligencia Artificial.   El flujo ha sido desviado a la ruta de contingencia para evitar la pérdida de datos.  ### 📋 Detalles del Error Técnico * **Nodo Afectado:** AI Agent (Procesamiento de propuesta) * **Mensaje de Error de la API:**  **Fecha y Hora del Fallo:** 2026-07-07  ### 👤 Datos del Lead Comercial Afectado * **Nombre del Interesado:** {{ $('Formulario Inicio de Trámite').item.json.Nombre }} {{ $('Formulario Inicio de Trámite').item.json.Apellido }} * **Correo del Contacto:** {{ $('Formulario Inicio de Trámite').item.json.Correo }}    ### 🛠️ Acción Requerida 1. Revisar el estado de las credenciales de la API de OpenAI o la cuota de tokens disponible. 2. Acceder a la tabla `Tickets_Ventas` en Airtable para procesar de forma manual la asignación de este lead si es necesario, ya que el análisis de lenguaje natural no pudo ejecutarse de manera autónoma.  --- _Notificación automática de resiliencia de infraestructura - Orquestador n8n_",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1824,
+        624
+      ],
+      "id": "bfa2c27d-2877-461f-b886-2b4dfd1905c8",
+      "name": "Mensaje ST Alerta",
+      "webhookId": "d273adac-6e62-4843-9b3d-7c0b7211016c",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "yjEEZtqUJOTSBPzX",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "Inicio de Trámite - HiperMegaRed",
+        "formDescription": "Consulta cliente ",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nombre"
+            },
+            {
+              "fieldLabel": "Apellido"
+            },
+            {
+              "fieldLabel": "Correo",
+              "fieldType": "email"
+            },
+            {
+              "fieldLabel": "Teléfono"
+            },
+            {
+              "fieldLabel": "Tipo de Consulta",
+              "fieldType": "radio",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Contratación"
+                  },
+                  {
+                    "option": "Soporte Tecnico"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Dirección"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        16,
+        -144
+      ],
+      "id": "ef829812-b59d-4d77-947b-e16a79a4dff6",
+      "name": "Formulario Inicio de Trámite",
+      "webhookId": "903e6cec-1544-4968-bd0f-e6da2640aa00"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "consulta_planes_tv": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consulta_planes_int": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ticket Venta": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Creacion de cliente": {
+      "main": [
+        [
+          {
+            "node": "Ticket Venta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Correo Al Cliente",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Actualizacion Ticket Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualizar ticket ventas": {
+      "main": [
+        [
+          {
+            "node": "Consulta Servicio tecnico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consulta Servicio tecnico": {
+      "main": [
+        [
+          {
+            "node": "Asignacion Tecnico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Asignacion Tecnico": {
+      "main": [
+        [
+          {
+            "node": "Mensaje a ST1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Confirmacion ST",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Correo Al Cliente": {
+      "main": [
+        [
+          {
+            "node": "Derivacion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje a ST1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Finalizacion",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Incidencia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirmacion ST": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Comercial/Soporte": {
+      "main": [
+        [
+          {
+            "node": "Busqueda Cliente",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Creacion de cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Derivacion": {
+      "main": [
+        [
+          {
+            "node": "Consulta Asesor",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Actualizar ticket ventas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consulta Asesor": {
+      "main": [
+        [
+          {
+            "node": "Asignacion asesor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Asignacion asesor": {
+      "main": [
+        [
+          {
+            "node": "Mensaje AsesorC",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Existe Cliente?": {
+      "main": [
+        [
+          {
+            "node": "Creacion ticket soporte",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Cliente no encontrado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Busqueda Cliente": {
+      "main": [
+        [
+          {
+            "node": "Existe Cliente?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Creacion ticket soporte": {
+      "main": [
+        [
+          {
+            "node": "Consulta ST",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consulta ST": {
+      "main": [
+        [
+          {
+            "node": "Asignación Tecnico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Asignación Tecnico": {
+      "main": [
+        [
+          {
+            "node": "Mensaje ST S",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje ST S": {
+      "main": [
+        [
+          {
+            "node": "Wait 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Finalización",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Incidencia S",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 2": {
+      "main": [
+        [
+          {
+            "node": "Correo Confirmacion Cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Correo Confirmacion Cliente": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje AsesorC": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Finalizacion1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Incidencia1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Confirmacion Asesor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirmacion Asesor": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualizacion Ticket Error": {
+      "main": [
+        [
+          {
+            "node": "Consulta ST Alerta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consulta ST Alerta": {
+      "main": [
+        [
+          {
+            "node": "Asignacion Tecnico1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Asignacion Tecnico1": {
+      "main": [
+        [
+          {
+            "node": "Mensaje ST Alerta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formulario Inicio de Trámite": {
+      "main": [
+        [
+          {
+            "node": "Comercial/Soporte",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "9bd423f6-6c80-4e8b-86eb-8eab365b7f74",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8442a2952fdcd1321598a0f6dd1d75923798d2578032c87aa5df4ca06e272679"
+  },
+  "nodeGroups": [],
+  "id": "HaZHLSIl59n5q2le",
+  "tags": []
+}
