@@ -77,17 +77,288 @@ El flujo está diseñado bajo estrictos estándares de estabilidad y tolerancia 
 
 ---
 
-## Estructura del Repositorio
-
-*   `/archivos-tecnicos`: Contiene el archivo `.json` de n8n para importar el flujo de forma directa.
-*   `/diagramas`: Diagrama de arquitectura del ecosistema en formato PDF.
-*   `/evidencias`: Capturas de pantalla que demuestran el funcionamiento óptimo del flujo en vivo.
-
----
-
 ## Enlaces y Recursos
 
 *   **Base de Datos en Airtable (Modo Lectura):** https://airtable.com/appkFBDLqSpUrBHY0/shrsFras6ko2GeR8R
+*   **Diagrama de Arquitectura:** [Descargar / Ver Diagrama PDF](./Diagrama%20HiperMegaRed.pdf)
 
+---
+
+## Evidencias de Funcionamiento
+
+Arquitectura completa
+
+![Arquitectura completa](./Screenshots/SS00001.jpeg)
+![Arquitectura completa](./Screenshots/SS00002.jpeg)
+
+Formulario de inicio de trámite
+
+![Formulario de inicio de trámite](./Screenshots/SS00003.jpeg)
+![Formulario de inicio de trámite](./Screenshots/SS00004.jpeg)
+
+Formulario de prueba para contratación
+
+![Formulario de prueba para contratación](./Screenshots/SS00005.jpeg)
+
+Comportamiento del workflow
+
+![Comportamiento del workflow](./Screenshots/SS00006.jpeg)
+
+Nodo IF Comercial/Soporte
+
+![Nodo IF Comercial/Soporte](./Screenshots/SS00007.jpeg)
+
+Nodo creación de cliente (Airtable)
+
+![Nodo creación de cliente](./Screenshots/SS00008.jpeg)
+
+Nodo creación de Ticket de Venta (Airtable)
+
+![Nodo creación de Ticket de Venta](./Screenshots/SS00009.jpeg)
+
+Nodo AI Agent
+
+![Nodo AI Agent](./Screenshots/SS00010.jpeg)
+
+Workflow luego de iniciar en nodo send and wait de correo al cliente (Gmail)
+
+![Workflow luego de iniciar en nodo send and wait de correo al cliente](./Screenshots/SS00011.jpeg)
+
+Correo recibido por el cliente
+
+![Correo recibido por el cliente](./Screenshots/SS00012.jpeg)
+![Correo recibido por el cliente](./Screenshots/SS00013.jpeg)
+
+Respuesta de cliente eligiendo uno de los productos propuestos por el Agente de IA
+
+![Respuesta de cliente eligiendo uno de los productos propuestos por el Agente de IA](./Screenshots/SS00014.jpeg)
+
+Comportamiento del workflow según la respuesta del cliente
+
+![Comportamiento del workflow según la respuesta del cliente](./Screenshots/SS00015.jpeg)
+
+Nodo de correo al cliente con su respuesta (Gmail)
+
+![Correo recibido por el cliente](./Screenshots/SS00016.jpeg)
+
+Nodo IF de Derivación a actualización de ticket de ventas
+
+![Nodo IF de Derivación a actualización de ticket de ventas](./Screenshots/SS00017.jpeg)
+
+Nodo de actualización de Ticket de Ventas (Airtable)
+
+![Nodo de actualización de Ticket de Ventas](./Screenshots/SS00018.jpeg)
+
+Nodo de Consulta al Servicio Técnico (Airtable)
+
+![Nodo de Consulta al Servicio Técnico](./Screenshots/SS00019.jpeg)
+
+Nodo de Código para Asignación de Técnico
+
+![Nodo de Código para Asignación de Técnico](./Screenshots/SS00020.jpeg)
+
+Nodo de Mensaje vía correo al técnico asignado (Gmail)
+
+![Nodo de Mensaje vía correo al técnico asignado](./Screenshots/SS00021.jpeg)
+
+Correo recibido por el técnico asignado
+
+![Correo recibido por el técnico asignado](./Screenshots/SS00022.jpeg)
+
+Nodo Wait de espera para que transcurrido un tiempo se vuelva a enviar un mensaje al técnico para saber si se realizó la instalación 
+
+![Nodo Wait de espera para que transcurrido un tiempo se vuelva a enviar un mensaje al técnico para saber si se realizó la instalación](./Screenshots/SS00023.jpeg)
+
+Nodo Send and Wait para el técnico asignado (Gmail)
+
+![Nodo Send and Wait para el técnico asignado](./Screenshots/SS00024.jpeg)
+
+Correo enviado al técnico asignado
+
+![Correo enviado al técnico asignado](./Screenshots/SS00025.jpeg)
+
+Nodo IF para el caso de que la respuesta de la instalación haya sido Aprobada
+
+![Nodo IF para el caso de que la respuesta de la instalación haya sido Aprobada](./Screenshots/SS00026.jpeg)
+
+Nodo de finalización del trámite (Airtable)
+
+![Nodo de finalización del trámite](./Screenshots/SS00027.jpeg)
+
+Nodo IF para el caso de que la respuesta de la instalación no haya sido Aprobada
+
+![Nodo IF para el caso de que la respuesta de la instalación haya sido Aprobada](./Screenshots/SS00028.jpeg)
+
+Nodo de Incidencia del trámite (Airtable)
+
+![Nodo de finalización del trámite](./Screenshots/SS00029.jpeg)
+
+Nodo IF de Derivación para el caso que el cliente prefiera ser atendido por un ASESOR
+
+![Nodo IF de Derivación para el caso que el cliente prefiera ser atendido por un asesor](./Screenshots/SS00030.jpeg)
+
+Nodo de Consulta Asesor (Airtable)
+
+![Nodo de finalización del trámite](./Screenshots/SS00031.jpeg)
+
+Nodo de Código de Asignación de Asesor
+
+![Nodo de Código de Asignación de Asesor](./Screenshots/SS00032.jpeg)
+
+Nodo de Mensaje a Asesor Comercial (Gmail)
+
+![Nodo de Mensaje a Asesor Comercial](./Screenshots/SS00033.jpeg)
+
+Correo recibido por el Asesor Comercial
+
+![Nodo de Mensaje a Asesor Comercial](./Screenshots/SS00034.jpeg)
+
+Nodo Wait de espera para que transcurrido un tiempo se vuelva a enviar un mensaje al asesor para saber si se realizó la instalación 
+
+![Nodo Wait de espera para que transcurrido un tiempo se vuelva a enviar un mensaje al asesor para saber si se realizó la instalación](./Screenshots/SS00035.jpeg)
+
+Nodo Send and Wait para el Asesor Comercial asignado (Gmail)
+
+![Nodo Send and Wait para el Asesor Comercial asignado](./Screenshots/SS00036.jpeg) 
+
+Correo recibido por el Asesor Comercial
+
+![Correo recibido por el Asesor Comercial](./Screenshots/SS00037.jpeg) 
+
+Nodo IF para el caso de que la respuesta de la instalación haya sido Aprobada
+
+![Nodo IF para el caso de que la respuesta de la instalación haya sido Aprobada](./Screenshots/SS00038.jpeg)
+
+Nodo de finalización del trámite (Airtable)
+
+![Nodo de finalización del trámite](./Screenshots/SS00039.jpeg)
+
+Nodo IF para el caso de que la respuesta de la instalación no haya sido Aprobada
+
+![Nodo IF para el caso de que la respuesta de la instalación haya sido Aprobada](./Screenshots/SS00041.jpeg)
+
+Nodo de Incidencia del trámite (Airtable)
+
+![Nodo de finalización del trámite](./Screenshots/SS00042.jpeg)
+
+Comportamiento del Workflow en caso de error del Agente de IA
+
+![Comportamiento del Workflow en caso de error del Agente de IA](./Screenshots/SS00043.jpeg)
+
+Nodo de Actualización del estado del Ticket a Error (Airtable)
+
+![Actualización del estado del Ticket a Error](./Screenshots/SS00044.jpeg)
+
+Nodo de Consulta al Servicio Técnico para Alerta (Airtable)
+
+![Nodo de Consulta al Servicio Técnico para Alerta](./Screenshots/SS00045.jpeg)
+
+Nodo de Código para asignación de un técnico para ver el Alerta
+
+![Nodo de Código para asignación de un técnico para ver el Alerta](./Screenshots/SS00046.jpeg)
+
+Nodo de Mensaje de Alerta al técnico asignado (Gmail)
+
+![Nodo de Mensaje de Alerta al técnico asignado](./Screenshots/SS00047.jpeg)
+
+Correo enviado al técnico asignado
+
+![Correo enviado al técnico asignado](./Screenshots/SS00048.jpeg)
+
+Formulario de prueba para servicio técnico
+
+![Formulario de prueba para servicio técnico](./Screenshots/SS00049.jpeg)
+
+Comportamiento del Workflow luego de la solicitud de soporte
+
+![Comportamiento del Workflow luego de la solicitud de soporte](./Screenshots/SS00050.jpeg)
+
+Nodo IF Comercial/Soporte
+
+![Nodo IF Comercial/Soporte](./Screenshots/SS00051.jpeg)
+
+Nodo de Búsqueda de Cliente (Airtable)
+
+![Nodo de Búsqueda de Cliente](./Screenshots/SS00052.jpeg)
+
+Nodo IF de confirmación de la existencia de cliente
+
+![Nodo IF de confirmación de la existencia de cliente](./Screenshots/SS00053.jpeg)
+
+Nodo de Creación de Ticket de Soporte (Airtable)
+
+![Nodo de Creación de Ticket de Soporte](./Screenshots/SS00054.jpeg)
+
+Nodo de Consulta Servicio Técnico (Airtable)
+
+![Nodo de Consulta Servicio Técnico](./Screenshots/SS00055.jpeg)
+
+Nodo de Código para asignación de un técnico
+
+![Nodo de Código para asignación de un técnico](./Screenshots/SS00056.jpeg)
+
+Nodo de Mensaje al Técnico Asignado (Gmail)
+
+![Nodo de Mensaje al Técnico Asignado](./Screenshots/SS00057.jpeg)
+
+Correo enviado al técnico asignado
+
+![Correo enviado al técnico asignado](./Screenshots/SS00058.jpeg)
+
+Nodo Wait de espera para que transcurrido un tiempo se vuelva a enviar un mensaje al cliente para saber si se realizó el servicio 
+
+![Nodo Wait de espera para que transcurrido un tiempo se vuelva a enviar un mensaje al técnico para saber si se realizó el servicio](./Screenshots/SS00059.jpeg)
+
+Nodo Send and Wait para el Cliente que solicitó el servicio técnico (Gmail)
+
+![Nodo Send and Wait para el Cliente que solicitó el servicio técnico](./Screenshots/SS00060.jpeg) 
+
+Correo recibido por el cliente
+
+![Correo recibido por el cliente](./Screenshots/SS00061.jpeg) 
+
+Nodo IF para confirmación de la resolución del su problema con ayuda del soporte técnico
+
+![Nodo IF para confirmación de la resolución del su problema con ayuda del soporte técnico](./Screenshots/SS00062.jpeg)
+
+Nodo de finalización del trámite (Airtable)
+
+![Nodo de finalización del trámite](./Screenshots/SS00063.jpeg)
+
+Nodo IF para confirmación de la NO resolución del su problema con ayuda del soporte técnico
+
+![Nodo IF para confirmación de la NO resolución del su problema con ayuda del soporte técnico](./Screenshots/SS00064.jpeg)
+
+Nodo de Incidencia del trámite (Airtable)
+
+![Nodo de finalización del trámite](./Screenshots/SS00065.jpeg)
+
+Caso de solicitud de servicio técnico por una persona que no es cliente
+
+![Caso de solicitud de servicio técnico por una persona que no es cliente](./Screenshots/SS00066.jpeg)
+
+Comportamiento del Workflow en caso de solicitud de servicio técnico por una persona que no es cliente
+
+![Comportamiento del Workflow en caso de solicitud de servicio técnico por una persona que no es cliente](./Screenshots/SS00067.jpeg)
+
+Nodo IF Comercial/Soporte
+
+![Nodo IF Comercial/Soporte](./Screenshots/SS00068.jpeg)
+
+Nodo de Búsqueda de Cliente (Airtable)
+
+![Nodo de Búsqueda de Cliente](./Screenshots/SS00069.jpeg)
+
+Nodo IF de confirmación de la inexistencia de cliente
+
+![Nodo IF de confirmación de la existencia de cliente](./Screenshots/SS00070.jpeg)
+
+Nodo de correo para informar al solicitante del servicio técnico que no es cliente
+
+![Nodo de correo para informar al solicitante del servicio técnico que no es cliente](./Screenshots/SS00071.jpeg)
+
+Correo enviado al solicitante informándole que no es cliente
+
+![Correo enviado al solicitante informándole que no es cliente](./Screenshots/SS00072.jpeg)
 
 ---
