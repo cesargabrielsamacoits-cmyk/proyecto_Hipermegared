@@ -6,7 +6,7 @@ El sistema integra bases de datos dinámicas, modelos de lenguaje avanzados (LLM
 
 ---
 
-##  Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 *   **Orquestador Principal:** n8n (flujo lógico autohospedado).
 *   **Base de Datos / Memoria:** Airtable (tablas relacionales de clientes, ventas y soporte).
@@ -21,13 +21,13 @@ El sistema se dispara de manera automatizada ante cada nuevo formulario recibido
 
 El flujo se compone de 4 capas fundamentales:
 
-1-Triggers / Captura: Recepción de solicitudes a través de un formulario único (Trámite Comercial o Soporte Técnico).
+1. **Triggers / Captura:** Recepción de solicitudes a través de un formulario único (Trámite Comercial o Soporte Técnico).
 
-2-Capa de Persistencia (Base de Datos): Sincronización y registro en tiempo real con Airtable.
+2. **Capa de Persistencia (Base de Datos):** Sincronización y registro en tiempo real con Airtable.
 
-3-Cerebro Cognitivo (IA Agent): Procesamiento de lenguaje natural mediante un Agente de LangChain (OpenAI/OpenRouter) capaz de consultar herramientas en tiempo real (Function Calling / RAG).
+3. **Cerebro Cognitivo (IA Agent):** Procesamiento de lenguaje natural mediante un Agente de LangChain (OpenAI/OpenRouter) capaz de consultar herramientas en tiempo real (Function Calling / RAG).
 
-4-Capa de Notificación y Aprobación (HITL & Mailer): Envíos multicanal vía Gmail con confirmación interactiva (Send & Wait).
+4. **Capa de Notificación y Aprobación (HITL & Mailer):** Envíos multicanal vía Gmail con confirmación interactiva (Send & Wait).
 
 ### Desencadenador y Enrutamiento Inicial
 *   **Trigger:** El flujo se inicia con el nodo **Formulario Inicio de Trámite**.
@@ -45,9 +45,9 @@ El flujo se compone de 4 capas fundamentales:
 El agente analiza la consulta inicial del cliente, determina qué herramienta necesita ejecutar para consultar la disponibilidad real de planes y genera una propuesta comercial personalizada sin invención de datos (alucinaciones).
 *   **Bifurcación de Resiliencia (Manejo de Errores):**
     *   **Camino Feliz (Éxito de la IA):** Envía un **Correo al Cliente** con la propuesta e ingresa al **IF Derivación**.
-        *   *Sub-ruta de Servicio Técnico:* **Actualizar Ticket Ventas** $\rightarrow$ **Consulta Servicio Técnico** $\rightarrow$ **Asignación Técnico** $\rightarrow$ **Mensaje a ST** $\rightarrow$ **Espera 5  Días(u otro período indicado)** $\rightarrow$ **Confirmación ST**.
-        *   *Sub-ruta de Asesor Comercial:* **Consulta Asesor** $\rightarrow$ **Asignación Asesor** $\rightarrow$ **Mensaje Asesor C** $\rightarrow$ **Espera 5 Días** $\rightarrow$ **Confirmación Asesor**.
-    *   **Camino Infeliz (Fallo de la IA):** El flujo desvía la carga hacia el nodo **Actualizacion Ticket: Error** $\rightarrow$ **Consulta ST Alerta** $\rightarrow$ **Asignacion Tecnico** $\rightarrow$ emitiendo un **Mensaje ST Alerta** para intervención humana inmediata.
+        *   *Sub-ruta de Servicio Técnico:* **Actualizar Ticket Ventas** → **Consulta Servicio Técnico** → **Asignación Técnico** → **Mensaje a ST** → **Espera 5  Días(u otro período indicado)** → **Confirmación ST**.
+        *   *Sub-ruta de Asesor Comercial:* **Consulta Asesor** → **Asignación Asesor** → **Mensaje Asesor C** → **Espera 5 Días** → **Confirmación Asesor**.
+    *   **Camino Infeliz (Fallo de la IA):** El flujo desvía la carga hacia el nodo **Actualizacion Ticket: Error** → **Consulta ST Alerta** → **Asignacion Tecnico** → emitiendo un **Mensaje ST Alerta** para intervención humana inmediata.
 
 ---
 
@@ -85,16 +85,20 @@ El flujo está diseñado bajo estrictos estándares de estabilidad y tolerancia 
 ---
 
 ## Evidencias de Funcionamiento
+<details>
+<summary> <b>Haga clic aquí para desplegar las 72 capturas de evidencia del workflow</b></summary>
 
-Arquitectura completa
+### Arquitectura completa
 
 ![Arquitectura completa](./Screenshots/SS00001.jpeg)
 ![Arquitectura completa](./Screenshots/SS00002.jpeg)
 
-Formulario de inicio de trámite
+### Formulario de inicio de trámite
 
 ![Formulario de inicio de trámite](./Screenshots/SS00003.jpeg)
 ![Formulario de inicio de trámite](./Screenshots/SS00004.jpeg)
+
+### Rama Comercial
 
 Formulario de prueba para contratación
 
@@ -115,6 +119,8 @@ Nodo creación de cliente (Airtable)
 Nodo creación de Ticket de Venta (Airtable)
 
 ![Nodo creación de Ticket de Venta](./Screenshots/SS00009.jpeg)
+
+#### AI Agent
 
 Nodo AI Agent
 
@@ -140,6 +146,8 @@ Comportamiento del workflow según la respuesta del cliente
 Nodo de correo al cliente con su respuesta (Gmail)
 
 ![Correo recibido por el cliente](./Screenshots/SS00016.jpeg)
+
+#### Derivación a Técnico e Instalación
 
 Nodo IF de Derivación a actualización de ticket de ventas
 
@@ -193,6 +201,8 @@ Nodo de Incidencia del trámite (Airtable)
 
 ![Nodo de finalización del trámite](./Screenshots/SS00029.jpeg)
 
+#### Derivación a Asesor Comercial
+
 Nodo IF de Derivación para el caso que el cliente prefiera ser atendido por un ASESOR
 
 ![Nodo IF de Derivación para el caso que el cliente prefiera ser atendido por un asesor](./Screenshots/SS00030.jpeg)
@@ -241,6 +251,8 @@ Nodo de Incidencia del trámite (Airtable)
 
 ![Nodo de finalización del trámite](./Screenshots/SS00042.jpeg)
 
+#### Manejo de fallos en IA Agent 
+
 Comportamiento del Workflow en caso de error del Agente de IA
 
 ![Comportamiento del Workflow en caso de error del Agente de IA](./Screenshots/SS00043.jpeg)
@@ -264,6 +276,10 @@ Nodo de Mensaje de Alerta al técnico asignado (Gmail)
 Correo enviado al técnico asignado
 
 ![Correo enviado al técnico asignado](./Screenshots/SS00048.jpeg)
+
+### Rama Soporte Técnico
+
+#### Clientes Activos
 
 Formulario de prueba para servicio técnico
 
@@ -333,6 +349,8 @@ Nodo de Incidencia del trámite (Airtable)
 
 ![Nodo de finalización del trámite](./Screenshots/SS00065.jpeg)
 
+#### No Clientes
+
 Caso de solicitud de servicio técnico por una persona que no es cliente
 
 ![Caso de solicitud de servicio técnico por una persona que no es cliente](./Screenshots/SS00066.jpeg)
@@ -361,4 +379,5 @@ Correo enviado al solicitante informándole que no es cliente
 
 ![Correo enviado al solicitante informándole que no es cliente](./Screenshots/SS00072.jpeg)
 
+</details>
 ---
