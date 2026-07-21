@@ -20,9 +20,13 @@ El sistema integra bases de datos dinámicas, modelos de lenguaje avanzados (LLM
 El sistema se dispara de manera automatizada ante cada nuevo formulario recibido (`On form submission`).
 
 El flujo se compone de 4 capas fundamentales:
+
 1-Triggers / Captura: Recepción de solicitudes a través de un formulario único (Trámite Comercial o Soporte Técnico).
+
 2-Capa de Persistencia (Base de Datos): Sincronización y registro en tiempo real con Airtable.
+
 3-Cerebro Cognitivo (IA Agent): Procesamiento de lenguaje natural mediante un Agente de LangChain (OpenAI/OpenRouter) capaz de consultar herramientas en tiempo real (Function Calling / RAG).
+
 4-Capa de Notificación y Aprobación (HITL & Mailer): Envíos multicanal vía Gmail con confirmación interactiva (Send & Wait).
 
 ### Desencadenador y Enrutamiento Inicial
@@ -37,7 +41,8 @@ El flujo se compone de 4 capas fundamentales:
 *   **Motor Cognitivo (AI Agent):** El núcleo de procesamiento no utiliza plantillas estáticas sino que utiliza un **AI Agent** conectado a:
     *   **Model:** `OpenAI Chat Model`.
     *   **Tools Integradas:** `Consulta Planes Internet` y `Consulta Planes TV`.
-      El agente analiza la consulta inicial del cliente, determina qué herramienta necesita ejecutar para consultar la disponibilidad real de planes y genera una propuesta comercial personalizada sin invención de datos (alucinaciones).
+
+El agente analiza la consulta inicial del cliente, determina qué herramienta necesita ejecutar para consultar la disponibilidad real de planes y genera una propuesta comercial personalizada sin invención de datos (alucinaciones).
 *   **Bifurcación de Resiliencia (Manejo de Errores):**
     *   **Camino Feliz (Éxito de la IA):** Envía un **Correo al Cliente** con la propuesta e ingresa al **IF Derivación**.
         *   *Sub-ruta de Servicio Técnico:* **Actualizar Ticket Ventas** $\rightarrow$ **Consulta Servicio Técnico** $\rightarrow$ **Asignación Técnico** $\rightarrow$ **Mensaje a ST** $\rightarrow$ **Espera 5  Días(u otro período indicado)** $\rightarrow$ **Confirmación ST**.
