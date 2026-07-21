@@ -14,6 +14,17 @@ El sistema integra bases de datos dinámicas, modelos de lenguaje avanzados (LLM
 *   **Canal de Comunicación:** Gmail (para notificaciones automáticas y flujos de aprobación interactivos).
 
 ---
+##  Estructura del Repositorio
+
+A continuación se detalla la organización de los archivos y carpetas contenidos en este repositorio:
+
+```text
+├── Screenshots/                   # Carpeta con las 72 evidencias de ejecución en formato .jpeg
+├── Diagrama HiperMegaRed.pdf      # Diagrama completo de la arquitectura del ecosistema
+├── HiperMegaRed.json              # Flujo exportado de n8n con todos los nodos y configuraciones
+└── README.md                      # Documentación principal del proyecto
+```
+---
 
 ##  Arquitectura del Flujo
 
