@@ -92,6 +92,7 @@ El flujo está diseñado bajo estrictos estándares de estabilidad y tolerancia 
 
 *   **Base de Datos en Airtable (Modo Lectura):** https://airtable.com/appkFBDLqSpUrBHY0/shrsFras6ko2GeR8R
 *   **Diagrama de Arquitectura:** [Descargar / Ver Diagrama PDF](./Diagrama%20HiperMegaRed.pdf)
+*   **Video Demostración:** https://drive.google.com/file/d/1IwcSPUUIKc72ZYV6wQ2jnTppGTDi6rPk
 
 ---
 
